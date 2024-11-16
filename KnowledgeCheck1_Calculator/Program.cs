@@ -7,74 +7,80 @@ using System.Threading.Tasks;
 namespace KnowledgeCheck1_Calculator
 {
     class Program
+{
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        Console.WriteLine("Hello. Press 1 for addition, 2 for subtraction, 3 for multiplication, and 4 for division");
+        var input = Console.ReadLine();
+        var calculator = new Calculator();
+
+        switch (input)
         {
+            case "1":
+                if (TryGetTwoIntegers(out int addNumOne, out int addNumTwo))
+                {
+                    Console.Write($"{addNumOne} + {addNumTwo} = ");
+                    Console.Write(calculator.Add(addNumOne, addNumTwo));
+                }
+                break;
 
-            Console.WriteLine("Hello. Press 1 for addition, 2 for subtraction, 3 for multiplication, and 4 for division");
+            case "2":
+                if (TryGetTwoIntegers(out int subNumOne, out int subNumTwo))
+                {
+                    Console.Write($"{subNumOne} - {subNumTwo} = ");
+                    Console.Write(calculator.Subtract(subNumOne, subNumTwo));
+                }
+                break;
 
-            var input = Console.ReadLine();
-            var calculator = new Calculator();
+            case "3":
+                if (TryGetTwoIntegers(out int mulNumOne, out int mulNumTwo))
+                {
+                    Console.Write($"{mulNumOne} * {mulNumTwo} = ");
+                    Console.Write(calculator.Multiply(mulNumOne, mulNumTwo));
+                }
+                break;
 
-            switch (input)
-            {
-                case "1":
-                    Console.WriteLine("Enter 2 integers to add");
-                    var addNumber1 = Console.ReadLine();
-                    var addNumber2 = Console.ReadLine();
+            case "4":
+                Console.WriteLine("Enter two numbers to divide:");
+                var divideNumber1 = Console.ReadLine();
+                var divideNumber2 = Console.ReadLine();
 
-                    if (int.TryParse(addNumber1, out int addNumOne) && int.TryParse(addNumber2, out int addNumTwo))
-                    {
-                        Console.Write($"{addNumber1} + {addNumber2} = ");
-                        Console.Write(calculator.Add(addNumOne, addNumTwo));
-                    }
-                    else
-                    {
-                        Console.WriteLine("One or more of the numbers is not an int");
-                    }
-                    break;
+                if (double.TryParse(divideNumber1, out double divNumOne) && double.TryParse(divideNumber2, out double divNumTwo))
+                {
+                    Console.Write($"{divNumOne} / {divNumTwo} = ");
+                    Console.Write(calculator.Divide(divNumOne, divNumTwo));
+                }
+                else
+                {
+                    Console.WriteLine("One or more of the numbers is not a number");
+                }
+                break;
 
-                case "2":
-                    Console.WriteLine("Enter 2 integers to subtract");
-                    var subtractNumber1 = Console.ReadLine();
-                    var subtractNumber2 = Console.ReadLine();
-
-                    if (int.TryParse(subtractNumber1, out int subNumOne) && int.TryParse(subtractNumber2, out int subNumTwo))
-                    {
-                        Console.Write($"{subtractNumber1} - {subtractNumber2} = ");
-                        Console.Write(calculator.Subtract(subNumOne, subNumTwo));
-                    }
-                    else
-                    {
-                        Console.WriteLine("One or more of the numbers is not an int");
-                    }
-                    break;
-
-                case "3":
-                    // Add code here
-                    break;
-
-                case "4":
-                    Console.WriteLine("Enter 2 integers to divide");
-                    var divideNumber1 = Console.ReadLine();
-                    var divideNumber2 = Console.ReadLine();
-
-                    if (double.TryParse(divideNumber1, out double divNumOne) && double.TryParse(divideNumber2, out double divNumTwo))
-                    {
-                        Console.Write($"{divideNumber1} / {divideNumber2} = ");
-                        Console.Write(calculator.Divide(divNumOne, divNumTwo));
-                    }
-                    else
-                    {
-                        Console.WriteLine("One or more of the numbers is not an int");
-                    }
-                    break;
-                    break;
-
-                default:
-                    Console.WriteLine("Unknown input");
-                    break;
-            }
+            default:
+                Console.WriteLine("Unknown input");
+                break;
         }
     }
+
+    static bool TryGetTwoIntegers(out int num1, out int num2)
+    {
+        Console.WriteLine("Enter two integers:");
+        var input1 = Console.ReadLine();
+        var input2 = Console.ReadLine();
+
+        if (int.TryParse(input1, out num1) && int.TryParse(input2, out num2))
+        {
+            return true;
+        }
+
+        // Assign default values to ensure the out parameters are always set
+        num1 = 0;
+        num2 = 0;
+
+        Console.WriteLine("One or more of the numbers is not an int");
+        return false;
+    }
+
+}
+
 }
